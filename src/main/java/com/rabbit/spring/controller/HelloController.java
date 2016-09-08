@@ -18,4 +18,9 @@ public class HelloController {
 	public Person person(String name){
 		return personRepository.findByName(name);
 	}
+	
+	@RequestMapping("/world")
+	public String helloWorld(){
+		return "Hello World";
+	}
 }
