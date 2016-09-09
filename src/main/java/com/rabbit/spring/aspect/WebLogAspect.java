@@ -15,6 +15,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.alibaba.fastjson.JSONObject;
+
 @Aspect
 @Component
 public class WebLogAspect {
@@ -22,6 +24,7 @@ public class WebLogAspect {
 	private Logger log = LoggerFactory.getLogger(WebLogAspect.class);
 	
 	ThreadLocal<Long> startTime = new ThreadLocal<Long>();
+	ThreadLocal<String> requestArgs = new ThreadLocal<String>();
 	
 	@Pointcut("execution(public * com.rabbit.spring.controller..*.*(..))")
 	public void webLog(){}
@@ -38,13 +41,14 @@ public class WebLogAspect {
         		request.getRequestURL().toString(), request.getMethod(), request.getRemoteAddr(), 
         		joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName(), 
         		Arrays.toString(joinPoint.getArgs()));
+        requestArgs.set(Arrays.toString(joinPoint.getArgs()));
 	}
 	
 	@AfterReturning(returning = "ret", pointcut = "webLog()")
     public void doAfterReturning(Object ret) throws Throwable {
         // 处理完请求，返回内容
-        log.info("RESPONSE : " + com.alibaba.fastjson.JSONObject.toJSONString(ret));
-        log.info("request timed (ms):{}", System.currentTimeMillis() - startTime.get());
+        log.info("response info >> REQ_RESP_TIME:{}, REQUEST:{}, RESPONSE:{}", System.currentTimeMillis() - startTime.get(), 
+        		requestArgs.get(), JSONObject.toJSONString(ret));
     }
 	
 }
