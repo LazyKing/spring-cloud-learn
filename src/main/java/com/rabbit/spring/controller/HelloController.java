@@ -18,7 +18,7 @@ public class HelloController {
 	
 	@RequestMapping("/person")
 	public Person person(String name){
-		log.info("请求的参数name" + name);
+		log.info("请求的参数, name: " + name);
 		return personRepository.findByName(name);
 	}
 	
