@@ -10,6 +10,8 @@
 
 **4. spring boot结合log4j2的例子，见log4j2.xml配置文件。**
 
-**5. spring boot结合junit4的例子，见test包，包括mockmvc的测试。**
+**5. spring boot结合aop打印请求响应日志的例子，见aspect包。**
 
-**6. spring cloud config 配置管理的使用方法。**
+**6. spring boot结合junit4的例子，见test包，包括mockmvc的测试。**
+
+**7. spring cloud config 配置管理的使用方法。**
