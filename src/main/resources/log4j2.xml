@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
+	<properties>
+		<property name="LOG_HOME">E:/logs</property>
+	</properties>
 	<Appenders>
 		<Console name="Console" target="SYSTEM_OUT">
 			<PatternLayout pattern="%d [%t] %-5level %logger{36} %L - %msg%n" />
 		</Console>
+		<RollingFile name="webLog" fileName="${LOG_HOME}/webLog.log" filePattern="${LOG_HOME}/webLog-%d{yyyyMMdd}.log">
+			<PatternLayout pattern="%d [%t] %-5level %logger{36} %L - %msg%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="20" />
+		</RollingFile>
 	</Appenders>
 	<Loggers>
+		<Logger name="com.rabbit.spring" level="info" additivity="true">
+			<AppenderRef ref="webLog" />
+		</Logger>
 		<Root level="info">
 			<AppenderRef ref="Console" />
 		</Root>
