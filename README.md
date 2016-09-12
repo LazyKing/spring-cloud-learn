@@ -15,3 +15,5 @@
 **6. spring boot结合junit4的例子，见test包，包括mockmvc的测试。**
 
 **7. spring cloud config 配置管理的使用方法。**
+
+**8. spring cloud eureka 微服务之服务注册与发现。**
