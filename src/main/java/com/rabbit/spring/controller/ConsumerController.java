@@ -16,12 +16,15 @@ public class ConsumerController {
 	@Autowired
 	private RestTemplate restTemplate;
 	
-	@RequestMapping("plus")
+	@RequestMapping("/plus")
 	public int plus(int a, int b){
 		log.info("consumer request parameters a: {}, b: {}", a, b);
-//		Map<String, Object> urlVs = new HashMap<String, Object>();
-//		urlVs.put("a", a);
-//		urlVs.put("b", b);
-		return restTemplate.getForEntity("http://SPRING-CLOUD-SERVICE-APP/compute/plus?a="+a+"&b="+b, Integer.class).getBody();
+		return restTemplate.getForEntity("http://SPRING-CLOUD-SERVICE-APP/compute/plus?a={a}&b={b}", Integer.class, a, b).getBody();
 	}
+	
+	@RequestMapping("/name")
+	public String name(String name){
+		return restTemplate.getForEntity("http://SPRING-CLOUD-SERVICE-APP/compute/name?name={name}", String.class, name).getBody();
+	}
+	
 }
